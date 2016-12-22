@@ -1,0 +1,9 @@
+<% if user_signed_in? %>
+    <li>
+      <%= link_to 'Déconnexion', destroy_user_session_path, :method => :delete %>
+    </li>
+<% else %>
+    <li>
+      <%= link_to 'Connexion', new_user_session_path %>
+    </li>
+<% end %>

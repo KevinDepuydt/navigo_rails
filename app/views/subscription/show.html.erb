@@ -1,0 +1,43 @@
+<h2 class="page-title">Détails de votre abonnement</h2>
+<table class="subscriptions">
+  <tbody>
+    <tr>
+      <td style="width: 200px;">Numéro de carte</td>
+      <td><%= @subscription.card.number %></td>
+    </tr>
+    <tr>
+      <td>Propriétaire de la carte</td>
+      <td><%= @subscription.card.user.first_name %> <%= @subscription.card.user.last_name %></td>
+    </tr>
+    <tr>
+      <td>Montant payé</td>
+      <td><%= @subscription.amount %>€</td>
+    </tr>
+    <tr>
+      <td>Statut</td>
+      <td>
+        <% if SubscriptionHelper.is_valid(@subscription.end_at) %>
+            <span class="status-bullet valid"></span> En cours
+        <% else %>
+            <span class="status-bullet finish"></span> Terminé
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Durée de l'abonnement</td>
+      <td><%= SubscriptionHelper.get_duration_label(@subscription.duration) %></td>
+    </tr>
+    <tr>
+      <td>Date de début</td>
+      <td><%= @subscription.start_at.strftime('%d/%m/%Y') %></td>
+    </tr>
+    <tr>
+      <td>Date de fin</td>
+      <td><%= @subscription.end_at.strftime('%d/%m/%Y') %></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="actions">
+  <%= link_to "Retour", :back, class: 'btn' %>
+</div>

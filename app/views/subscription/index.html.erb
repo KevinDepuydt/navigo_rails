@@ -1,0 +1,49 @@
+<h2 class="page-title">Mes abonnements</h2>
+
+<% if current_user.card.subscriptions.last.nil? || !SubscriptionHelper.is_valid(current_user.card.subscriptions.last.end_at) %>
+  <p>Il n'y a aucun abonnement en cours pour cette carte.</p>
+  <%= link_to 'Recharger 1 semaine', new_subscription_path(duration:'1W'), class: 'btn' %>
+  <%= link_to 'Recharger 1 mois', new_subscription_path(duration:'1M'), class: 'btn' %>
+  <%= link_to 'Recharger 1 an', new_subscription_path(duration:'1Y'), class: 'btn' %>
+<% end %>
+
+<% if @subscriptions %>
+  <table class="subscriptions">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Montant</th>
+        <th>Durée</th>
+        <th>Date de début</th>
+        <th>Date de fin</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @subscriptions.each do |s| %>
+      <tr>
+        <td>#<%= s.id %></td>
+        <td><%= s.amount %>€</td>
+        <td><%= SubscriptionHelper.get_duration_label(s.duration) %></td>
+        <td><%= s.start_at.strftime('%d/%m/%Y') %></td>
+        <td><%= s.end_at.strftime('%d/%m/%Y') %></td>
+        <td>
+          <% if SubscriptionHelper.is_valid(s.end_at) %>
+            <span class="status-bullet valid"></span> En cours
+          <% else %>
+            <span class="status-bullet finish"></span> Terminé
+          <% end %>
+        </td>
+        <td>
+          <%= link_to 'Détails', subscription_path(s.id), class: 'link' %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<div class="actions">
+  <%= link_to "Retour", :back, class: 'btn' %>
+</div>

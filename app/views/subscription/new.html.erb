@@ -1,0 +1,50 @@
+<h2 class="page-title">Rechargement de votre carte pour <%= SubscriptionHelper.get_duration_label(@duration) %></h2>
+
+<table class="subscriptions">
+  <tbody>
+  <tr>
+    <td style="width: 200px;">Numéro de carte</td>
+    <td><%= current_user.card.number %></td>
+  </tr>
+  <tr>
+    <td>Propriétaire de la carte</td>
+    <td><%= current_user.card.user.first_name %> <%= current_user.card.user.last_name %></td>
+  </tr>
+  <tr>
+    <td>Montant à payer</td>
+    <td><%= @amount %>€</td>
+  </tr>
+  <tr>
+    <td>Durée de l'abonnement</td>
+    <td><%= SubscriptionHelper.get_duration_label(@duration) %></td>
+  </tr>
+  <tr>
+    <td>Date de début</td>
+    <td>Dès la validation de votre recharge</td>
+  </tr>
+  </tbody>
+</table>
+
+<%= form_tag new_card_subscription_path do %>
+    <article>
+      <% if flash[:error].present? %>
+          <div id="error_explanation">
+            <p><%= flash[:error] %></p>
+          </div>
+      <% end %>
+    </article>
+
+    <%= hidden_field_tag 'duration', @duration %>
+
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-name="NavigoRails"
+            data-description="<%= @description %>"
+            data-amount="<%= @amount_in_cent %>"
+            data-locale="fr"
+            data-currency="eur"></script>
+<% end %>
+
+<div class="actions">
+  <%= link_to "Retour", :back, class: 'btn' %>
+</div>

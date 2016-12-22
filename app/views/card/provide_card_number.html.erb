@@ -1,0 +1,8 @@
+<%= form_tag({controller: 'card', action: 'link_card_to_user'}, method: 'put') do %>
+    <%= text_field_tag :number, nil, placeholder: 'Numéro de votre carte navigo', required: true, autofocus: true %>
+    <%= submit_tag 'Lier une carte à mon compte', class: 'btn' %>
+<% end %>
+
+<div class="actions">
+  <%= link_to "Retour", :back, class: 'btn' %>
+</div>

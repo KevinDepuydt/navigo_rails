@@ -1,0 +1,46 @@
+<div class="home-container">
+  <% if user_signed_in? %>
+    <h2 class="page-title">Détail de votre carte Navigo</h2>
+    <% if current_user.card %>
+      <div id="navigo_card_template">
+        <div id="navigo_card_photo">
+          <%= image_tag(current_user.avatar.url(:medium)) %>
+        </div>
+        <div id="navigo_card">
+        </div>
+        <p id="navigo_card_firstname"><%= current_user.first_name %></p>
+        <p id="navigo_card_lastname"><%= current_user.last_name %></p>
+        <p id="navigo_card_number"><%= current_user.card.number %></p>
+      </div>
+      <div id="navigo_details">
+        <p>Propriétaire de la carte : <%= current_user.first_name %> <%= current_user.last_name %></p>
+        <p>Carte n° <%= current_user.card.number %></p>
+        <% if current_user.card.subscriptions.last %>
+          <% if SubscriptionHelper.is_valid(current_user.card.subscriptions.last.end_at) %>
+            <p>Abonnement en cours de validité pour cette carte jusqu'au <%= current_user.card.subscriptions.last.end_at.strftime('%d/%m/%Y') %></p>
+          <% else %>
+            <p>Votre abonnement est terminé depuis le <%= current_user.card.subscriptions.last.end_at.strftime('%d/%m/%Y') %></p>
+            <%= link_to "Recharger 1 semaine", new_subscription_path(duration:'1W'), class: 'btn' %>
+            <%= link_to "Recharger 1 mois", new_subscription_path(duration:'1M'), class: 'btn' %>
+            <%= link_to "Recharger 1 an", new_subscription_path(duration:'1Y'), class: 'btn' %>
+          <% end %>
+          <%= link_to 'Voir mon dernier abonnement', subscription_path(current_user.card.subscriptions.last.id), class: 'btn' %>
+        <% else %>
+          <p>Il n'y a aucun abonnement en cours de validité pour cette carte.</p>
+          <%= link_to "Recharger 1 semaine", new_subscription_path(duration:'1W'), class: 'btn' %>
+          <%= link_to "Recharger 1 mois", new_subscription_path(duration:'1M'), class: 'btn' %>
+          <%= link_to "Recharger 1 an", new_subscription_path(duration:'1Y'), class: 'btn' %>
+        <% end %>
+      </div>
+    <% else %>
+      <p>Il semblerait que votre compte ne soit relier à aucune carte</p>
+      <%= link_to 'Lier mon compte avec ma carte navigo', provide_card_number_path, class: 'link' %>
+    <% end %>
+  <% else %>
+    <h2 class="page-title">Vérifier une carte</h2>
+    <%= form_tag({controller: 'card', action: 'check_card_subscriptions'}, class: 'verify-card') do %>
+        <%= text_field_tag :number, nil, placeholder: 'Numéro de la carte' %>
+        <%= submit_tag 'Vérifier', class: 'btn' %>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Navigo</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', 'https://fonts.googleapis.com/css?family=Raleway:300,300i,500,500i,700,700i,900|Unica+One', media: 'all', 'data-turbolinks-track': true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div id="menu">
+      <h1 class="title">
+        <%= link_to 'NavigoRails', root_path %>
+      </h1>
+      <ul class="hmenu">
+        <% if user_signed_in? %>
+            <li>
+              <%= link_to 'Abonnements', subscriptions_path %>
+            </li>
+        <% end %>
+        <%= render 'devise/menu/registration_items' %>
+        <%= render 'devise/menu/login_items' %>
+      </ul>
+    </div>
+
+    <%= render 'layouts/flash_messages' %>
+
+    <div class="content-container">
+      <%= yield %>
+    </div>
+  </body>
+</html>
