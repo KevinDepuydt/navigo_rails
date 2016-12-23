@@ -54,3 +54,6 @@ gem 'devise', '4.2.0'
 
 # stripe
 gem 'stripe'
+
+# Admin
+gem 'rails_admin'
