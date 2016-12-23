@@ -64,5 +64,7 @@ namespace :db do
     User.delete_all
     # Delete all cards
     Card.delete_all
+    # Delete all subscriptions
+    Subscription.delete_all
   end
 end
