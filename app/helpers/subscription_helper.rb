@@ -59,4 +59,8 @@ module SubscriptionHelper
   def self.is_valid(end_date)
     Date.new(end_date.year, end_date.month, end_date.day) > Date.current
   end
+
+  def self.is_waiting(start_date)
+    Date.new(start_date.year, start_date.month, start_date.day) > Date.current
+  end
 end

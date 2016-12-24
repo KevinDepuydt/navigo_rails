@@ -30,7 +30,11 @@
         <td><%= s.end_at.strftime('%d/%m/%Y') %></td>
         <td>
           <% if SubscriptionHelper.is_valid(s.end_at) %>
-            <span class="status-bullet valid"></span> En cours
+            <% if SubscriptionHelper.is_waiting(s.start_at) %>
+                  <span class="status-bullet waiting"></span> En attente
+            <% else %>
+                  <span class="status-bullet valid"></span> En cours
+            <% end %>
           <% else %>
             <span class="status-bullet finish"></span> Terminé
           <% end %>

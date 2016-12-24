@@ -15,4 +15,8 @@ Rails.application.routes.draw do
   get '/subscription/new/:duration' => 'subscription#new'
   post 'new_card_subscription' => 'subscription#create'
   get 'subscriptions' => 'subscription#index'
+
+  # API
+  get '/api/check_card_subscriptions' => 'api#check_card_subscriptions'
+  get '/api/new_card_subscription' => 'api#new_card_subscription'
 end

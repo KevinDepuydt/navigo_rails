@@ -17,7 +17,7 @@
         <p>Carte n° <%= current_user.card.number %></p>
         <% if current_user.card.subscriptions.last %>
           <% if SubscriptionHelper.is_valid(current_user.card.subscriptions.last.end_at) %>
-            <p>Abonnement en cours de validité pour cette carte jusqu'au <%= current_user.card.subscriptions.last.end_at.strftime('%d/%m/%Y') %></p>
+            <p>Abonnement en cours de validité jusqu'au <%= current_user.card.subscriptions.last.end_at.strftime('%d/%m/%Y') %></p>
           <% else %>
             <p>Votre abonnement est terminé depuis le <%= current_user.card.subscriptions.last.end_at.strftime('%d/%m/%Y') %></p>
             <%= link_to "Recharger 1 semaine", new_subscription_path(duration:'1W'), class: 'btn' %>

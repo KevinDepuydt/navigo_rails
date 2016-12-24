@@ -20,6 +20,7 @@ class SubscriptionController < ApplicationController
   def create
     subscription = @card.subscriptions.last
     if subscription.nil? || subscription.end_at <= Date.current
+      puts "Subscription params #{params}"
       payment = SubscriptionPayment.pay(@card, params)
       if payment.success?
         last_subscription = @card.subscriptions.last

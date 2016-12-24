@@ -17,7 +17,11 @@
       <td>Statut</td>
       <td>
         <% if SubscriptionHelper.is_valid(@subscription.end_at) %>
-            <span class="status-bullet valid"></span> En cours
+          <% if SubscriptionHelper.is_waiting(@subscription.start_at) %>
+              <span class="status-bullet waiting"></span> En attente
+          <% else %>
+              <span class="status-bullet valid"></span> En cours
+          <% end %>
         <% else %>
             <span class="status-bullet finish"></span> Terminé
         <% end %>
