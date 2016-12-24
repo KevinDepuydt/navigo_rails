@@ -3,7 +3,7 @@ require 'securerandom'
 namespace :db do
   desc 'Import users from data file'
   task import_users: :environment do
-    user_file_path = './db/data/users_test.lst'
+    user_file_path = './db/data/users.lst'
     File.open(user_file_path, 'r').each_line do |line|
       # User data
       last_name, first_name = line.split(/\s/)
@@ -33,7 +33,7 @@ namespace :db do
 
   desc 'Import cards from data file'
   task import_cards: :environment do
-    card_file_path = './db/data/cards_test.lst'
+    card_file_path = './db/data/cards.lst'
     File.open(card_file_path, 'r').each_line do |card_number|
       card = Card.create(number: card_number.gsub(/\n/, ''))
       if card.persisted?
