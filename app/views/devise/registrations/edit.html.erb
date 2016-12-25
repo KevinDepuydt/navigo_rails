@@ -50,6 +50,11 @@
   </div>
 <% end %>
 
+<% if current_user.card %>
+    <h2 class="page-title">Identifiant API de votre carte</h2>
+    <p><%= current_user.card.auth_token %></p>
+<% end %>
+
 <h2 class="page-title">Vous n'êtes pas satisfait ?</h2>
 <%= button_to "Supprimer mon compte", registration_path(resource_name), data: { confirm: "Confirmer la suppression du compte ?" }, method: :delete, class: 'btn' %>
 

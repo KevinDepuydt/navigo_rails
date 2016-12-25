@@ -5,12 +5,12 @@ class ApiController < ApplicationController
 
   def check_card_subscriptions
     if @card.nil?
-      render json: { message:'Cette carte est introuvable' }, status: 404
+      render json: { success: false, message:'Cette carte est introuvable' }, status: 404
     else
       if CardSubscriptions.is_valid(@card)
-        render json: { message:'Cette carte possède un abonnement en cours de validité' }, status: 200
+        render json: { success: true, message:'Cette carte possède un abonnement en cours de validité' }, status: 200
       else
-        render json: { message:'Cette carte ne possède pas d\'abonnement en cours de validité' }, status: 200
+        render json: { success: true, message:'Cette carte ne possède pas d\'abonnement en cours de validité' }, status: 200
       end
     end
   end
@@ -27,9 +27,9 @@ class ApiController < ApplicationController
                         card_id: @card.id)
 
     if subscription.persisted?
-      render json: { message: "L'abonnement de la carte #{@card.number} à bien été validé jusqu'au #{@end_date.strftime('%d/%m/%Y')}" }, status: 200
+      render json: { success: true, message: "L'abonnement de la carte #{@card.number} à bien été validé jusqu'au #{@end_date.strftime('%d/%m/%Y')}" }, status: 200
     else
-      render json: { message: 'Une erreur est survenue lors de la validation de l\abonnement' }, status: 400
+      render json: { success: false, message: 'Une erreur est survenue lors de la validation de l\abonnement' }, status: 400
     end
   end
 
@@ -64,9 +64,9 @@ class ApiController < ApplicationController
     @duration = params[:duration]
 
     if @duration.nil?
-      render json: { message: 'Missing duration param' }, status: 400
+      render json: { success: false, message: 'Missing duration param' }, status: 400
     elsif not %w(1W 1M 1Y).include?(@duration)
-      render json: { message: 'Wrong duration (1 week = 1W, 1 month = 1M, 1 year = 1Y)' }, status: 400
+      render json: { success: false, message: 'Wrong duration (1 week = 1W, 1 month = 1M, 1 year = 1Y)' }, status: 400
     end
   end
 
